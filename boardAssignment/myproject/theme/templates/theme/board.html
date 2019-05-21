@@ -2,15 +2,38 @@
 
 {% block content %}
 
-    {% for blog in blogs.all %}
-        <h4>제목 : {{ blog.title }}</h1>
-        <p>날짜 : {{ blog.date }}</p>
-        <p>내용 : {{ blog.body }}</p>
-        <p>글쓴이 : 익명</p>
-        <br>
-    <a href="{% url 'edit' pk=blog.pk %} ">수정하기</a>
-    <a href="{% url 'remove' pk=blog.pk %}" >제거하기</a>
-        <hr>
-    {% endfor %}
 
-{% endblock %}
+<table class="table table-bordered" style="text-align: center;">
+    <thead>
+        <tr>
+            <th scope="col" style="width: 10%;">글 번호</th>
+            <th scope="col" style="width: 20%;">날짜</th>
+            <th scope="col" style="width: 50%;">제목</th>
+            <th scope="col" style="width: 20%;">글쓴이</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for blog in blogs.all %}
+        <tr>
+            <td>
+                <h4>{{ blog.id }}</h4>
+            </td>
+            <td>
+                <h4>{{ blog.date }}</h4>
+            </td>
+            <td>
+                <a href="{% url 'detaile' blog.id %}">{{ blog.title }}</a>
+            </td>
+            <td>
+                <p>익명</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><a href="{% url 'edit' pk=blog.pk %} ">수정하기</a></td>
+            <td colspan="2"><a href="{% url 'remove' pk=blog.pk %}">제거하기</a></td>
+        </tr>
+        <hr>
+        {% endfor %}
+    </tbody>
+
+    {% endblock %}
