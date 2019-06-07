@@ -2,14 +2,27 @@
 
 {% block content %}
 
-
+<!-- searcher -->
+<div class="dropdown">
+    <button class="btn btn-secondary float-right dropdown-toggle" type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Hashtag 검색
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for hashtag in hashtags.all %}
+        <a class="dropdown-item" href="{% url 'search' hashtag.id %}">{{ hashtag.name }}</a>
+        {% endfor %}
+    </div>
+</div>
+<br><br>
 <table class="table table-bordered" style="text-align: center;">
     <thead>
         <tr>
             <th scope="col" style="width: 10%;">글 번호</th>
-            <th scope="col" style="width: 20%;">날짜</th>
-            <th scope="col" style="width: 50%;">제목</th>
-            <th scope="col" style="width: 20%;">글쓴이</th>
+            <th scope="col" style="width: 10%;">날짜</th>
+            <th scope="col" style="width: 30%">포토</th>
+            <th scope="col" style="width: 40%;">제목</th>
+            <th scope="col" style="width: 10%;">글쓴이</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +35,11 @@
                 <h4>{{ blog.date }}</h4>
             </td>
             <td>
+                {% if blog.image %}
+                <img src="{{ blog.image.url }}" alt="">
+                {% endif %}
+            </td>
+            <td>
                 <a href="{% url 'detaile' blog.id %}">{{ blog.title }}</a>
             </td>
             <td>
@@ -29,7 +47,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><a href="{% url 'edit' pk=blog.pk %} ">수정하기</a></td>
+            <td colspan="3"><a href="{% url 'edit' pk=blog.pk %} ">수정하기</a></td>
             <td colspan="2"><a href="{% url 'remove' pk=blog.pk %}">제거하기</a></td>
         </tr>
         <hr>
